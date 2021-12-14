@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'community/post_list.dart';
 
 void main() {
-  runApp(const Commetn());
+  runApp(const AppMain());
 }
 
-class Commetn extends StatelessWidget {
-  const Commetn({Key? key}) : super(key: key);
+class AppMain extends StatelessWidget {
+  const AppMain({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class Commetn extends StatelessWidget {
           centerTitle: true,
         ),
         body: Center(
-          child: Text('Zillani'),
+          child: PostList(),
         ),
       ),
     );
