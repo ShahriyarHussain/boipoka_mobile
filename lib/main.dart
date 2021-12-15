@@ -14,10 +14,10 @@ class AppMain extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
-          title: Text('hello'),
+          title: const Text('Boipoka'),
           centerTitle: true,
         ),
-        body: Center(
+        body: const Center(
           child: PostList(),
         ),
       ),
