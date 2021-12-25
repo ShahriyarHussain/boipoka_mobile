@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'community/post_list.dart';
+import 'auth/login.dart';
 
 void main() {
   runApp(const AppMain());
@@ -18,7 +19,7 @@ class AppMain extends StatelessWidget {
           centerTitle: true,
         ),
         body: const Center(
-          child: PostList(),
+          child: Login(),
         ),
       ),
     );
