@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'community/post_list.dart';
 import 'auth/login.dart';
+import 'auth/register.dart';
 
 void main() {
   runApp(const AppMain());
@@ -19,7 +20,7 @@ class AppMain extends StatelessWidget {
           centerTitle: true,
         ),
         body: const Center(
-          child: Login(),
+          child: Register(),
         ),
       ),
     );
