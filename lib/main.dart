@@ -20,7 +20,7 @@ class AppMain extends StatelessWidget {
           centerTitle: true,
         ),
         body: const Center(
-          child: Register(),
+          child: Login(),
         ),
       ),
     );

@@ -1,6 +1,11 @@
-// import 'dart:html';
+import 'dart:async';
+
+import 'package:http/http.dart' as http;
+import 'user.dart';
+import 'dart:convert';
 
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
@@ -17,6 +22,7 @@ class _RegisterState extends State<Register> {
   final _unameController = TextEditingController();
   final _password1Controller = TextEditingController();
   final _password2Controller = TextEditingController();
+  final urlPrefix = 'http://10.0.2.2:8000/users/';
 
   var _fname = "";
   var _lname = "";
@@ -25,6 +31,7 @@ class _RegisterState extends State<Register> {
   var _password2 = "";
 
   final _errorMessages = [
+    "",
     "",
     "",
     "",
@@ -43,6 +50,14 @@ class _RegisterState extends State<Register> {
         _errorMessages[field] = "";
       });
     }
+  }
+
+  Future<void> sendRegistration(User user) async {
+    var jsonUser = jsonEncode(user);
+    log(jsonUser);
+    var resp = await http.post(Uri.parse(urlPrefix + 'users/create'),
+        body: jsonUser, headers: {'Content-Type': 'application/json'});
+    log('${resp.statusCode}' + "\n" + resp.body);
   }
 
   @override
@@ -138,13 +153,12 @@ class _RegisterState extends State<Register> {
           ),
           ElevatedButton(
             onPressed: () {
-              setState(() {
-                _uname = _unameController.text;
-                _fname = _fnameController.text;
-                _lname = _lnameController.text;
-                _password1 = _password1Controller.text;
-                _password2 = _password2Controller.text;
-              });
+              User user = User(
+                  firstName: _fnameController.text,
+                  lastName: _fnameController.text,
+                  username: _unameController.text,
+                  password: _password1Controller.text);
+              sendRegistration(user);
             },
             child: const Text("Register"),
           ),
