@@ -19,13 +19,10 @@ class _PostListState extends State<PostList> {
   Future<void> getRequest() async {
     log('Button clicked');
     try {
-      final url = Uri.parse('$urlPrefix/api/posts');
+      final url = Uri.parse('$urlPrefix/api/posts/');
       log('url: $url');
       Response response = await get(url);
       log('response: $response');
-      text =
-          'Status code: ${response.statusCode} \n header: ${response.headers} \n body: ${response.body} ';
-      log(text);
     } catch (e) {
       log('exception: $e');
       text = '$e';
