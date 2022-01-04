@@ -30,6 +30,7 @@ dependencies:
   http: ^0.13.4
   flutter_secure_storage: ^5.0.2
   html: ^0.15.0
+  curved_navigation_bar: ^1.0.1
   flutter:
     sdk: flutter
 

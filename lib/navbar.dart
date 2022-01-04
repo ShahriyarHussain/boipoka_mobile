@@ -1,45 +1,36 @@
-import 'package:flutter/material.dart';
+// import 'dart:developer';
 
-class Navbar extends StatefulWidget {
-  const Navbar({Key? key}) : super(key: key);
+// import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+// import 'package:flutter/material.dart';
 
-  @override
-  _NavbarState createState() => _NavbarState();
-}
+// class Navbar extends StatefulWidget {
+//   const Navbar({Key? key}) : super(key: key);
 
-class _NavbarState extends State<Navbar> {
-  int _selectedIndex = 0;
+//   @override
+//   _NavbarState createState() => _NavbarState();
+// }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+// class _NavbarState extends State<Navbar> {
+//   int _selectedIndex = 1;
 
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.blueGrey),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.attach_money),
-            label: 'Trade',
-            backgroundColor: Colors.blueGrey),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Community',
-            backgroundColor: Colors.blueGrey),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Account',
-            backgroundColor: Colors.blueGrey),
-      ],
-      currentIndex: _selectedIndex,
-      selectedItemColor: Colors.amber[200],
-      onTap: _onItemTapped,
-    );
-  }
-}
+  // final items = const <Widget>[
+  //   Icon(
+  //     Icons.home,
+  //     size: 30,
+  //   ),
+  //   Icon(Icons.group, size: 30),
+  //   Icon(Icons.attach_money, size: 30),
+  //   Icon(Icons.bookmark, size: 30),
+  //   Icon(Icons.account_circle, size: 30),
+  // ];
+
+//   void _onItemTapped(int index) {
+//     setState(() {
+//       _selectedIndex = index;
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return 
+// }

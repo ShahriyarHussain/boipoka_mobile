@@ -42,7 +42,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Center(
+        child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
@@ -77,6 +78,6 @@ class _LoginState extends State<Login> {
           child: Text(_username + " " + _password),
         )
       ],
-    );
+    ));
   }
 }
