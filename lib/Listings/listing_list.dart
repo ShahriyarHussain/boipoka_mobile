@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:boipoka_mobile/Listings/listing.dart';
+import 'package:boipoka_mobile/Listings/listing_card.dart';
 import 'package:boipoka_mobile/community/post_card.dart';
 import 'package:boipoka_mobile/services/auth_service.dart';
 import 'package:boipoka_mobile/vars.dart';
@@ -9,18 +11,18 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:boipoka_mobile/community/post.dart';
 
-class PostList extends StatefulWidget {
-  const PostList({Key? key}) : super(key: key);
+class ListingList extends StatefulWidget {
+  const ListingList({Key? key}) : super(key: key);
 
   @override
-  _PostListState createState() => _PostListState();
+  _ListingListState createState() => _ListingListState();
 }
 
-class _PostListState extends State<PostList> {
+class _ListingListState extends State<ListingList> {
   final urlPrefix = Vars().getBaseUrl();
   final _storage = const FlutterSecureStorage();
   bool isLoggedIn = true;
-  List<PostCard> allPosts = [];
+  List<ListingCard> allListings = [];
 
   @override
   void initState() {
@@ -33,8 +35,6 @@ class _PostListState extends State<PostList> {
     if (isLoggedIn) {
       getRequest();
     }
-    log("hello");
-    log(isLoggedIn.toString());
     super.initState();
   }
 
@@ -43,7 +43,7 @@ class _PostListState extends State<PostList> {
   Future<void> getRequest() async {
     try {
       final token = await _storage.read(key: "token");
-      final url = Uri.parse('$urlPrefix/api/posts/');
+      final url = Uri.parse('$urlPrefix/api/listings/');
 
       var response = await http.get(url, headers: {
         HttpHeaders.authorizationHeader: 'JWT $token',
@@ -51,12 +51,17 @@ class _PostListState extends State<PostList> {
       });
 
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
-      decodedResponse.forEach((posts) {
+      // log(decodedResponse.toString());
+      decodedResponse.forEach((listings) {
+        // Map<String, dynamic> oneListing = listings;
+        // oneListing.forEach((key, value) {
+        //   log("$key : $value");
+        // });
+        // Listing newListing = Listing.fromJson(listings);
         setState(() {
-          allPosts.add(PostCard(Post.fromJson(posts)));
+          allListings.add(ListingCard(Listing.fromJson(listings)));
         });
       });
-      log("hello");
     } catch (e) {
       log('exception: $e');
       text = '$e';
@@ -79,14 +84,14 @@ class _PostListState extends State<PostList> {
                     onPressed: () {
                       Navigator.popAndPushNamed(context, '/login');
                     },
-                    child: const Text("Login"))
+                    child: Text("Login"))
               ],
             ),
           )
         : SingleChildScrollView(
             child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: allPosts,
+            children: allListings,
           ));
   }
 }
