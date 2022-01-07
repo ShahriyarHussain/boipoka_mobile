@@ -1,10 +1,22 @@
+import 'package:boipoka_mobile/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class Homepage extends StatelessWidget {
+  // final bool isLoggedIn;
   const Homepage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Text("HomePageContents");
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text("If you are not logged in!"),
+        TextButton(
+            onPressed: () {
+              Navigator.popAndPushNamed(context, '/login');
+            },
+            child: const Text("Click Here"))
+      ],
+    );
   }
 }

@@ -5,6 +5,7 @@ import 'package:boipoka_mobile/community/post_card.dart';
 import 'package:boipoka_mobile/services/auth_service.dart';
 import 'package:boipoka_mobile/vars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:boipoka_mobile/community/post.dart';
@@ -70,23 +71,22 @@ class _PostListState extends State<PostList> {
   @override
   Widget build(BuildContext context) {
     return !isLoggedIn
-        ? Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("You are not logged in!"),
-                TextButton(
-                    onPressed: () {
-                      Navigator.popAndPushNamed(context, '/login');
-                    },
-                    child: const Text("Login"))
-              ],
-            ),
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("You are not logged in!"),
+              TextButton(
+                  onPressed: () {
+                    Navigator.popAndPushNamed(context, '/login');
+                  },
+                  child: const Text("Login"))
+            ],
           )
         : SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: allPosts,
-          ));
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: allPosts,
+            ));
   }
 }

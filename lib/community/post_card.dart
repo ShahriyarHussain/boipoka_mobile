@@ -8,15 +8,14 @@ class PostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(top: 10, left: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(post.author + " " + post.postType),
-          Text(post.datePosted),
+          Text("On " + post.datePosted + ", At " + post.timePosted),
           Text(post.content),
           Text("Likes: " + post.likes.toString()),
-          // Text(post.postId.toString()),
           Text("Comments" + post.comments.toString()),
         ],
       ),

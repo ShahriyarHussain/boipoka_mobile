@@ -1,5 +1,12 @@
 class Post {
-  final dynamic content, postType, likes, author, comments, datePosted, postId;
+  final dynamic content,
+      postType,
+      likes,
+      author,
+      comments,
+      datePosted,
+      postId,
+      timePosted;
 
   Post(
       {required this.content,
@@ -8,18 +15,19 @@ class Post {
       required this.likes,
       required this.author,
       required this.comments,
-      required this.postId});
+      required this.postId,
+      required this.timePosted});
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
-      content: json['content'],
-      datePosted: json['date_posted'],
-      postType: json['post_type'],
-      author: json['author'],
-      likes: json['likes'],
-      postId: json['id'],
-      comments: json['commentCount'],
-    );
+        content: json['content'],
+        datePosted: json['date_posted'].split("T")[0],
+        postType: json['post_type'],
+        author: json['author'],
+        likes: json['likes'],
+        postId: json['id'],
+        comments: json['commentCount'],
+        timePosted: json['date_posted'].split("T")[1].split(".")[0]);
   }
 
   Map toJsonPost() => {

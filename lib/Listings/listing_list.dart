@@ -75,18 +75,16 @@ class _ListingListState extends State<ListingList> {
   @override
   Widget build(BuildContext context) {
     return !isLoggedIn
-        ? Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("You are not logged in!"),
-                TextButton(
-                    onPressed: () {
-                      Navigator.popAndPushNamed(context, '/login');
-                    },
-                    child: Text("Login"))
-              ],
-            ),
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("You are not logged in!"),
+              TextButton(
+                  onPressed: () {
+                    Navigator.popAndPushNamed(context, '/login');
+                  },
+                  child: const Text("Login"))
+            ],
           )
         : SingleChildScrollView(
             child: Column(

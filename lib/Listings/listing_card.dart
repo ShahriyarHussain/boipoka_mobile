@@ -8,7 +8,7 @@ class ListingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(top: 10, left: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -21,7 +21,7 @@ class ListingCard extends StatelessWidget {
           Text("Type:" + Listing.convertListingType(listing.listingType)),
           Text("Wishlisted By: " + listing.wishlistedBy.toString()),
           Text("Viewed By: " + listing.viewedBy.toString()),
-          Text("posted at: " + listing.date.toString())
+          Text("posted on: " + listing.date + " at " + listing.time)
         ],
       ),
     );

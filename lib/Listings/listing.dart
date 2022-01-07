@@ -12,7 +12,8 @@ class Listing {
       viewedBy,
       trades,
       listedByName,
-      bookName;
+      bookName,
+      time;
 
   Listing({
     required this.id,
@@ -29,6 +30,7 @@ class Listing {
     required this.wishlistedBy,
     required this.viewedBy,
     required this.trades,
+    required this.time,
   });
 
   factory Listing.fromJson(Map<String, dynamic> json) {
@@ -41,12 +43,13 @@ class Listing {
         bookName: json['book_name'],
         book: json['book'],
         listingType: json['listing_type'],
-        date: json['date'],
+        date: json['date'].split("T")[0],
         listedBy: json['listed_by'],
         listedByName: json['listed_by_names'],
         wishlistedBy: json['wishlisted_by'],
         viewedBy: json['viewed_by'],
-        trades: json['trades']);
+        trades: json['trades'],
+        time: json['date'].split("T")[1].split(".")[0]);
   }
 
   static String convertCondition(int condition) {

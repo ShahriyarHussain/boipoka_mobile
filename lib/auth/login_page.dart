@@ -48,19 +48,13 @@ class _LoginPageState extends State<LoginPage> {
     if (resp.statusCode == 200) {
       var response = jsonDecode(utf8.decode(resp.bodyBytes));
       final token = response['token'];
-      // log("login button loggers");
-      // log("token :" + token);
+
       final userMap = response['user'];
-      // userMap.forEach((key, value) {
-      //   log("$key : $value");
-      // });
+
       await _storage.write(key: 'token', value: token);
       await _storage.write(key: 'username', value: userMap['username']);
       await _storage.write(key: 'id', value: userMap['id'].toString());
-      // Map<String, String> data = await _storage.readAll();
-      // data.forEach((key, value) {
-      //   log(key + " : " + value + "\n");
-      // });
+
       setState(() {
         loggedIn = true;
       });

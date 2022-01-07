@@ -1,5 +1,5 @@
 import 'package:boipoka_mobile/Listings/listing_list.dart';
-import 'package:boipoka_mobile/Routes/post_list_route.dart';
+import 'package:boipoka_mobile/add_page.dart';
 import 'package:boipoka_mobile/community/post_list.dart';
 import 'package:boipoka_mobile/homepage.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,7 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> {
   int _index = 0;
 
-  bool loggedIn = false;
+  bool isLoggedIn = false;
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _MainState extends State<Main> {
 
     auth.checkLogin().then((value) => {
           setState(() {
-            loggedIn = value;
+            isLoggedIn = value;
             // _storage = auth.getStorageVar();
           })
         });
@@ -50,15 +50,16 @@ class _MainState extends State<Main> {
   ];
 
   final _screens = const <Widget>[
-    Homepage(),
+    AddPage(),
     PostList(),
     ListingList(),
+    Homepage()
   ];
 
   @override
   Widget build(BuildContext context) {
     // int _index = 1;
-    return !loggedIn
+    return !isLoggedIn
         ? const Login()
         : MaterialApp(
             title: 'Root widget',
@@ -75,6 +76,11 @@ class _MainState extends State<Main> {
                 backgroundColor: Colors.indigo[900],
                 title: const Text('Boipoka'),
                 centerTitle: true,
+              ),
+              floatingActionButton: FloatingActionButton(
+                backgroundColor: Colors.yellow[900],
+                onPressed: () {},
+                child: const Icon(Icons.add),
               ),
               bottomNavigationBar: Theme(
                   data: Theme.of(context).copyWith(
