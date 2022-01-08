@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'package:boipoka_mobile/vars.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -11,9 +10,6 @@ class AuthService {
   final _storage = const FlutterSecureStorage();
 
   Future<bool> checkLogin() async {
-    // _storage.delete(key: "first_name");
-    // _storage.delete(key: "last_name");
-    // _storage.delete(key: "email");
     Map<String, String> data = await _storage.readAll();
 
     if (data.isEmpty) {
@@ -28,7 +24,6 @@ class AuthService {
       });
 
       if (response.statusCode == 200) {
-        // log("decodedResponse");
         var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
         decodedResponse.forEach((key, value) {
           if (key == "id" || key == "token" || key == "username") {
@@ -36,14 +31,8 @@ class AuthService {
           }
         });
 
-        // Map<String, String> data = await _storage.readAll();
-        // data.forEach((key, value) {
-        //   log("$key: $value");
-        // });
-
         return true;
       } else {
-        log(response.statusCode.toString() + " " + response.body);
         return false;
       }
     } else {

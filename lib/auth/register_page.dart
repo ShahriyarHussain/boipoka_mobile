@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:boipoka_mobile/auth/login.dart';
+import 'package:boipoka_mobile/vars.dart';
 import 'package:http/http.dart' as http;
 import 'user.dart';
 import 'dart:convert';
@@ -20,13 +20,14 @@ class _RegisterPageState extends State<RegisterPage> {
   final _unameController = TextEditingController();
   final _password1Controller = TextEditingController();
   final _password2Controller = TextEditingController();
-  final urlPrefix = 'http://10.0.2.2:8000/users/';
 
-  var _fname = "";
-  var _lname = "";
-  var _uname = "";
-  var _password1 = "";
-  var _password2 = "";
+  final urlPrefix = Vars().getBaseUrl();
+
+  // var _fname = "";
+  // var _lname = "";
+  // var _uname = "";
+  // var _password1 = "";
+  // var _password2 = "";
 
   final _errorMessages = [
     "",
@@ -49,11 +50,19 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  Future<void> sendRegistration(User user) async {
+  Future<bool> sendRegistration(User user) async {
     var jsonUser = jsonEncode(user);
     log(jsonUser);
-    var resp = await http.post(Uri.parse(urlPrefix + 'users/create'),
-        body: jsonUser, headers: {'Content-Type': 'application/json'});
+    try {
+      final resp = await http.post(Uri.parse(urlPrefix + 'users/create'),
+          body: jsonUser, headers: {'Content-Type': 'application/json'});
+      if (resp.statusCode == 200) {
+        return true;
+      }
+    } on Exception catch (e) {
+      log("Exception: $e");
+    }
+    return false;
   }
 
   @override

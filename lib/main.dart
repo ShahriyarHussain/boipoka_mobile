@@ -1,5 +1,5 @@
 import 'package:boipoka_mobile/Listings/listing_list.dart';
-import 'package:boipoka_mobile/add_page.dart';
+import 'package:boipoka_mobile/community/add_post.dart';
 import 'package:boipoka_mobile/community/post_list.dart';
 import 'package:boipoka_mobile/homepage.dart';
 import 'package:flutter/material.dart';
@@ -50,10 +50,9 @@ class _MainState extends State<Main> {
   ];
 
   final _screens = const <Widget>[
-    AddPage(),
+    Homepage(),
     PostList(),
     ListingList(),
-    Homepage()
   ];
 
   @override
@@ -69,6 +68,7 @@ class _MainState extends State<Main> {
               '/register': (context) => const Register(),
               '/login': (context) => const Login(),
               '/listingList': (context) => const ListingList(),
+              '/addPost': (context) => const AddPost(),
             },
             home: Scaffold(
               extendBody: true,
@@ -77,11 +77,11 @@ class _MainState extends State<Main> {
                 title: const Text('Boipoka'),
                 centerTitle: true,
               ),
-              floatingActionButton: FloatingActionButton(
-                backgroundColor: Colors.yellow[900],
-                onPressed: () {},
-                child: const Icon(Icons.add),
-              ),
+              // floatingActionButton: FloatingActionButton(
+              //   backgroundColor: Colors.yellow[900],
+              //   onPressed: () {},
+              //   child: const Icon(Icons.add),
+              // ),
               bottomNavigationBar: Theme(
                   data: Theme.of(context).copyWith(
                       iconTheme: const IconThemeData(color: Colors.white)),
@@ -95,7 +95,7 @@ class _MainState extends State<Main> {
                       index: _index,
                       height: 50,
                       onTap: (index) => setState(() => _index = index))),
-              body: _screens[_index],
+              body: _index < 3 ? _screens[_index] : _screens[0],
             ),
           );
   }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:boipoka_mobile/Listings/add_listing.dart';
 import 'package:boipoka_mobile/Listings/listing.dart';
 import 'package:boipoka_mobile/Listings/listing_card.dart';
 import 'package:boipoka_mobile/community/post_card.dart';
@@ -23,6 +24,7 @@ class _ListingListState extends State<ListingList> {
   final _storage = const FlutterSecureStorage();
   bool isLoggedIn = true;
   List<ListingCard> allListings = [];
+  bool createListing = false;
 
   @override
   void initState() {
@@ -51,16 +53,12 @@ class _ListingListState extends State<ListingList> {
       });
 
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
-      // log(decodedResponse.toString());
-      decodedResponse.forEach((listings) {
-        // Map<String, dynamic> oneListing = listings;
-        // oneListing.forEach((key, value) {
-        //   log("$key : $value");
-        // });
-        // Listing newListing = Listing.fromJson(listings);
-        setState(() {
-          allListings.add(ListingCard(Listing.fromJson(listings)));
-        });
+      List<ListingCard> temp = [];
+      decodedResponse.forEach((listing) {
+        temp.add(ListingCard(Listing.fromJson(listing)));
+      });
+      setState(() {
+        allListings = temp;
       });
     } catch (e) {
       log('exception: $e');
@@ -86,10 +84,34 @@ class _ListingListState extends State<ListingList> {
                   child: const Text("Login"))
             ],
           )
-        : SingleChildScrollView(
-            child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: allListings,
-          ));
+        : RefreshIndicator(
+            backgroundColor: Colors.indigo[900],
+            color: Colors.yellow[700],
+            triggerMode: RefreshIndicatorTriggerMode.onEdge,
+            onRefresh: () async {
+              getRequest();
+            },
+            child: Scaffold(
+                floatingActionButton: Container(
+                    margin: const EdgeInsets.only(bottom: 50),
+                    child: FloatingActionButton(
+                      elevation: 5,
+                      focusColor: Colors.yellow[900],
+                      isExtended: true,
+                      backgroundColor: Colors.yellow[700],
+                      onPressed: () {
+                        setState(() {
+                          createListing = !createListing;
+                        });
+                      },
+                      child: const Icon(Icons.add_business),
+                    )),
+                body: createListing
+                    ? const AddListing()
+                    : SingleChildScrollView(
+                        child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: allListings,
+                      ))));
   }
 }
