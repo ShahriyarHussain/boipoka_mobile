@@ -4,13 +4,12 @@ import 'dart:io';
 import 'package:boipoka_mobile/Listings/add_listing.dart';
 import 'package:boipoka_mobile/Listings/listing.dart';
 import 'package:boipoka_mobile/Listings/listing_card.dart';
-import 'package:boipoka_mobile/community/post_card.dart';
+
 import 'package:boipoka_mobile/services/auth_service.dart';
 import 'package:boipoka_mobile/vars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:boipoka_mobile/community/post.dart';
 
 class ListingList extends StatefulWidget {
   const ListingList({Key? key}) : super(key: key);
@@ -37,6 +36,7 @@ class _ListingListState extends State<ListingList> {
     if (isLoggedIn) {
       getRequest();
     }
+    createListing = false;
     super.initState();
   }
 
@@ -104,7 +104,9 @@ class _ListingListState extends State<ListingList> {
                           createListing = !createListing;
                         });
                       },
-                      child: const Icon(Icons.add_business),
+                      child: createListing
+                          ? const Icon(Icons.arrow_back)
+                          : const Icon(Icons.add_business),
                     )),
                 body: createListing
                     ? const AddListing()

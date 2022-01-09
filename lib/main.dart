@@ -5,7 +5,6 @@ import 'package:boipoka_mobile/homepage.dart';
 import 'package:flutter/material.dart';
 import 'auth/login.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-
 import 'auth/register.dart';
 import 'services/auth_service.dart';
 

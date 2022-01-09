@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:boipoka_mobile/vars.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -18,21 +19,26 @@ class AuthService {
       var token = data["token"];
       var url = Uri.parse(urlPrefix + 'users/current_user');
 
-      var response = await http.get(url, headers: {
-        HttpHeaders.authorizationHeader: 'JWT $token',
-        HttpHeaders.contentTypeHeader: 'application/json',
-      });
-
-      if (response.statusCode == 200) {
-        var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
-        decodedResponse.forEach((key, value) {
-          if (key == "id" || key == "token" || key == "username") {
-            _storage.write(key: key, value: value.toString());
-          }
+      try {
+        var response = await http.get(url, headers: {
+          HttpHeaders.authorizationHeader: 'JWT $token',
+          HttpHeaders.contentTypeHeader: 'application/json',
         });
 
-        return true;
-      } else {
+        if (response.statusCode == 200) {
+          var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+          decodedResponse.forEach((key, value) {
+            if (key == "id" || key == "token" || key == "username") {
+              _storage.write(key: key, value: value.toString());
+            }
+          });
+
+          return true;
+        } else {
+          return false;
+        }
+      } catch (e) {
+        log("Error in auth_service: $e");
         return false;
       }
     } else {

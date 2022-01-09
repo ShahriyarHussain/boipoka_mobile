@@ -41,28 +41,31 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> sendLogin(String username, String password) async {
     var jsonUser = jsonEncode({'username': username, 'password': password});
-    log(jsonUser);
-    var resp = await http.post(Uri.parse(urlPrefix + 'token-auth/'),
-        body: jsonUser, headers: {'Content-Type': 'application/json'});
 
-    if (resp.statusCode == 200) {
-      var response = jsonDecode(utf8.decode(resp.bodyBytes));
-      final token = response['token'];
+    try {
+      var resp = await http.post(Uri.parse(urlPrefix + 'token-auth/'),
+          body: jsonUser, headers: {'Content-Type': 'application/json'});
 
-      final userMap = response['user'];
+      if (resp.statusCode == 200) {
+        var response = jsonDecode(utf8.decode(resp.bodyBytes));
+        final token = response['token'];
 
-      await _storage.write(key: 'token', value: token);
-      await _storage.write(key: 'username', value: userMap['username']);
-      await _storage.write(key: 'id', value: userMap['id'].toString());
+        final userMap = response['user'];
 
-      setState(() {
-        loggedIn = true;
-      });
-    } else {
-      setState(() {
-        loggedIn = false;
-      });
-      ;
+        await _storage.write(key: 'token', value: token);
+        await _storage.write(key: 'username', value: userMap['username']);
+        await _storage.write(key: 'id', value: userMap['id'].toString());
+
+        setState(() {
+          loggedIn = true;
+        });
+      } else {
+        setState(() {
+          loggedIn = false;
+        });
+      }
+    } catch (e) {
+      log("Error in login: $e");
     }
   }
 

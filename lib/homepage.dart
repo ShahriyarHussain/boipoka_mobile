@@ -10,7 +10,7 @@ class Homepage extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text("If you are not logged in!"),
+        const Text("This is the home page !! If you are not logged in"),
         TextButton(
             onPressed: () {
               Navigator.popAndPushNamed(context, '/login');

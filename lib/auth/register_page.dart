@@ -50,17 +50,32 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  Future<bool> sendRegistration(User user) async {
-    var jsonUser = jsonEncode(user);
-    log(jsonUser);
-    try {
-      final resp = await http.post(Uri.parse(urlPrefix + 'users/create'),
-          body: jsonUser, headers: {'Content-Type': 'application/json'});
-      if (resp.statusCode == 200) {
-        return true;
+  Future<bool> sendRegistration(String firstName, String lastName,
+      String userName, String password) async {
+    // var jsonUser = jsonEncode(user);
+    // log(jsonUser);
+    var jsonUser = jsonEncode({
+      "user": {
+        "first_name": firstName,
+        "last_name": lastName,
+        "username": userName,
+        "password": password,
       }
-    } on Exception catch (e) {
-      log("Exception: $e");
+    });
+    log(Uri.parse(urlPrefix + 'users/users/create').toString());
+
+    try {
+      final resp = await http.post(Uri.parse(urlPrefix + 'users/users/create'),
+          body: jsonUser, headers: {'content-type': 'application/json'});
+      if (resp.statusCode == 200) {
+        log(resp.statusCode.toString());
+        return true;
+      } else {
+        log(resp.statusCode.toString());
+        log(resp.body.toString());
+      }
+    } catch (e) {
+      log("Exception in register: $e");
     }
     return false;
   }
@@ -165,12 +180,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20))),
             onPressed: () {
-              User user = User(
-                  firstName: _fnameController.text,
-                  lastName: _fnameController.text,
-                  username: _unameController.text,
-                  password: _password1Controller.text);
-              sendRegistration(user);
+              sendRegistration(_fnameController.text, _fnameController.text,
+                  _unameController.text, _password1Controller.text);
             },
             child: const Text("Register"),
           ),
