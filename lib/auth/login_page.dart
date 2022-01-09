@@ -21,8 +21,8 @@ class _LoginPageState extends State<LoginPage> {
 
   var loggedIn = true;
   var _storage = const FlutterSecureStorage();
-  var _username = "";
-  var _password = "";
+  // var _username = "";
+  // var _password = "";
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void getUserDetails() {}
 
-  Future<void> sendLogin(String username, String password) async {
+  Future<bool> sendLogin(String username, String password) async {
     var jsonUser = jsonEncode({'username': username, 'password': password});
 
     try {
@@ -56,16 +56,15 @@ class _LoginPageState extends State<LoginPage> {
         await _storage.write(key: 'username', value: userMap['username']);
         await _storage.write(key: 'id', value: userMap['id'].toString());
 
-        setState(() {
-          loggedIn = true;
-        });
+        return true;
       } else {
-        setState(() {
-          loggedIn = false;
-        });
+        log(resp.statusCode.toString());
+        log(resp.body);
+        return false;
       }
     } catch (e) {
       log("Error in login: $e");
+      return false;
     }
   }
 
@@ -84,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     image: AssetImage('assets/images/logo.png'),
                     fit: BoxFit.cover)),
           ),
-          Text(loggedIn ? "You are already logged in" : "Please Log in"),
+          Text(loggedIn ? "Login Success!" : "Please Log in"),
           Container(
               margin: const EdgeInsets.all(10),
               color: Colors.transparent,
@@ -118,11 +117,13 @@ class _LoginPageState extends State<LoginPage> {
                 side: const BorderSide(width: 0),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20))),
-            onPressed: () {
+            onPressed: () async {
               if (nameController.text.isNotEmpty &&
                   passwordController.text.isNotEmpty) {
-                sendLogin(nameController.text, passwordController.text);
-                if (loggedIn) {
+                bool success = false;
+                await sendLogin(nameController.text, passwordController.text)
+                    .then((value) => success = value);
+                if (success) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => const Main()));
                 }

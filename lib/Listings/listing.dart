@@ -70,13 +70,12 @@ class Listing {
     return negotiable ? "Yes" : "No";
   }
 
-  static String convertListingType(bool listing_type) {
-    return listing_type ? "Sell" : "Exchange";
+  static String convertListingType(bool listingType) {
+    return listingType ? "Sell" : "Exchange";
   }
 
   @override
   String toString() {
-    // TODO: implement toString
     return "$id \n$descriptions \n$price \n$condition \n$negotiable \n$bookName \n$book \n$listingType \n$date \n$listedBy \n$listedByName \n$wishlistedBy \n$viewedBy \n$trades";
   }
 }

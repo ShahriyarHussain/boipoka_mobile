@@ -1,4 +1,3 @@
-import 'package:boipoka_mobile/main.dart';
 import 'package:flutter/material.dart';
 import 'post.dart';
 

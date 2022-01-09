@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:boipoka_mobile/vars.dart';
 import 'package:http/http.dart' as http;
-import 'user.dart';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -68,16 +67,14 @@ class _RegisterPageState extends State<RegisterPage> {
       final resp = await http.post(Uri.parse(urlPrefix + 'users/users/create'),
           body: jsonUser, headers: {'content-type': 'application/json'});
       if (resp.statusCode == 200) {
-        log(resp.statusCode.toString());
         return true;
       } else {
-        log(resp.statusCode.toString());
-        log(resp.body.toString());
+        return false;
       }
     } catch (e) {
       log("Exception in register: $e");
+      return false;
     }
-    return false;
   }
 
   @override
@@ -179,9 +176,27 @@ class _RegisterPageState extends State<RegisterPage> {
                 side: const BorderSide(width: 0),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20))),
-            onPressed: () {
-              sendRegistration(_fnameController.text, _fnameController.text,
-                  _unameController.text, _password1Controller.text);
+            onPressed: () async {
+              if (_fnameController.text.isNotEmpty &&
+                  _lnameController.text.isNotEmpty &&
+                  _unameController.text.isNotEmpty &&
+                  _password1Controller.text.isNotEmpty &&
+                  _password2Controller.text.isNotEmpty) {
+                bool success = false;
+                await sendRegistration(
+                        _fnameController.text,
+                        _fnameController.text,
+                        _unameController.text,
+                        _password1Controller.text)
+                    .then((value) => success = value);
+                if (success) {
+                  Navigator.popAndPushNamed(context, '/login');
+                }
+              } else {
+                setState(() {
+                  _errorMessages[4] = "Please fill up all fields";
+                });
+              }
             },
             child: const Text("Register"),
           ),
