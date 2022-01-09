@@ -1,4 +1,3 @@
-import 'package:boipoka_mobile/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class Homepage extends StatelessWidget {

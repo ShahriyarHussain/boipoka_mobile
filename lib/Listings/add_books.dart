@@ -6,8 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 class AddBooks extends StatefulWidget {
-  bool addBooks;
-  AddBooks(this.addBooks, {Key? key}) : super(key: key);
+  const AddBooks({Key? key}) : super(key: key);
 
   @override
   _AddBooksState createState() => _AddBooksState();
@@ -166,7 +165,7 @@ class _AddBooksState extends State<AddBooks> {
                     labelText: "Publish Year"),
               )),
           Container(
-            margin: EdgeInsets.only(bottom: 80, top: 10),
+            margin: const EdgeInsets.only(bottom: 80, top: 10),
             child: TextButton(
                 onPressed: () {},
                 child: const Text("Add Book"),

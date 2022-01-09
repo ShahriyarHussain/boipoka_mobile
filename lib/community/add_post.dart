@@ -94,11 +94,11 @@ class _AddPostState extends State<AddPost> {
                 side: const BorderSide(width: 0),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20))),
-            onPressed: () {
+            onPressed: () async {
               if (contentController.text.isNotEmpty) {
                 content = contentController.text;
                 bool created = false;
-                createPost(dropdownValue, content)
+                await createPost(dropdownValue, content)
                     .then((value) => created = value);
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     action: SnackBarAction(

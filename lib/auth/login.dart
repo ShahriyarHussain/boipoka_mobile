@@ -1,5 +1,4 @@
 import 'package:boipoka_mobile/auth/register.dart';
-import 'package:boipoka_mobile/main.dart';
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 
